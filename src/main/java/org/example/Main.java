@@ -36,7 +36,7 @@ public class Main {
         ps.begin();
         p = ps.findById(1);
         if(p != null){
-            p.setMarque("HP");
+            p.setMarque("FENDER");
             p.setReference("MMMMMPPPP");
             p.setDateAchat(new Date("2019/03/05"));
             p.setPrix(5000);
