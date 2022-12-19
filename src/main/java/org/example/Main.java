@@ -4,10 +4,15 @@ import org.example.entities.Produit;
 
 import org.example.services.ProduitService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.time.LocalDate;
+import java.util.Locale;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         System.out.println("#############   Exercice 1    #############");
 
@@ -38,7 +43,7 @@ public class Main {
         if(p != null){
             p.setMarque("FENDER");
             p.setReference("MMMMMPPPP");
-            p.setDateAchat(new Date("2019/03/05"));
+            p.setDateAchat(new Date("2015/09/08"));
             p.setPrix(5000);
             ps.update(p);
         }
@@ -63,6 +68,25 @@ public class Main {
         for (Produit produitpascher : ps.filterByPrice(2100)) {
             System.out.println(produitpascher.getId()+" , "+produitpascher.getMarque()+" , "+produitpascher.getReference()+" , "+produitpascher.getDateAchat()+" , "+produitpascher.getPrix());
         }
+
+        ps.envoi();
+        System.out.println("Tous les produits achetés entre le 01/01/2016 et le 30/12/2016");
+        ps.begin();;
+        String madate1 ="01/01/2016";
+        Date date1= new SimpleDateFormat("dd/MM/yyyy").parse(madate1);
+        // Date date1 = new Date("2016/01/01");
+
+        String madate2 = "31/12/2016";
+        Date date2= new SimpleDateFormat("dd/MM/yyyy").parse(madate2);
+        // Date date2=new Date("2016/30/12");
+
+        List<Produit> produitsDate = ps.filterByDate(date1, date2);
+        for(Produit pr : produitsDate) {
+            System.out.println(pr.getId() + " , " + pr.getMarque()+" , "+pr.getDateAchat()+" , "+ pr.getPrix());
+        }
+
+        ps.envoi();
+
 
         ps.close();
 
